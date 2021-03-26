@@ -3,7 +3,7 @@ INCDIR		= .
 LIBFTDIR	= ./libft
 LIBFT		= libft/libft.a
 
-SRCS		= ft_printf.c
+SRCS		= ft_printf.c ft_printf_type.c
 
 OBJS		= $(SRCS:.c=.o)
 
