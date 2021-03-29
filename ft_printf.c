@@ -6,27 +6,28 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/03/26 22:19:22 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/03/29 07:06:23 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int ft_contains(char c, char *str)
+int ft_contains(char c, char const *charset)
 {
-	while (*str && c != *str)
-		str++;
-	return (c == *str);
+	while (*charset)
+		if (c == *charset++)
+			return (1);
+	return (0);
 }
 
 void init_spec(t_spec *spec)
 {
 	spec->specifier = 0;
 	spec->minus = 0;
-	spec->width_value = 0;
+	spec->width = 0;
 	spec->width_star = 0;
-	spec->precision = 0;
-	spec->precision_value = 0;
+	spec->dot = 0;
+	spec->precision = 6;
 	spec->precision_star = 0;
 }
 
@@ -47,14 +48,14 @@ int parse_spec(const char *fmt, t_spec *spec)
 		else if (fmt[index] == '-')
 			spec->minus = 1;
 		else if (fmt[index] == '.')
-			spec->precision = 1;
-		else if (ft_isdigit(fmt[index]) && spec->precision)
-			spec->precision_value = spec->precision_value * 10 + (fmt[index] - '0');
-		else if (ft_isdigit(fmt[index]) && !spec->precision)
-			spec->width_value = spec->width_value * 10 + (fmt[index] - '0');
-		else if (fmt[index] == '*' && spec->precision)
+			spec->dot = 1;
+		else if (ft_isdigit(fmt[index]) && spec->dot)
+			spec->precision = spec->precision * 10 + (fmt[index] - '0');
+		else if (ft_isdigit(fmt[index]) && !spec->dot)
+			spec->width = spec->width * 10 + (fmt[index] - '0');
+		else if (fmt[index] == '*' && spec->dot)
 			spec->precision_star = 1;
-		else if (fmt[index] == '*' && !spec->precision)
+		else if (fmt[index] == '*' && !spec->dot)
 			spec->width_star = 1;
 		else
 			return (-1);
@@ -63,41 +64,71 @@ int parse_spec(const char *fmt, t_spec *spec)
 	return (-1);
 }
 
+int adjust_width(char **s, t_spec *spec)
+{
+	char *holder;
+	int n_chars;
+
+	n_chars = ft_strlen(*s);
+	if (spec->width > n_chars)
+	{
+		holder = *s;
+		*s = malloc(spec->width);
+		ft_memcpy(*s + spec->width - n_chars, holder, n_chars);
+		ft_memset(*s, ' ', spec->width - n_chars);
+		free(holder);
+	}
+	return (1);
+}
+
 int print_arg(va_list *args, t_spec *spec)
 {
-	switch (spec->specifier)
+	int n_chars;
+	char *s;
+
+	if (spec->specifier == 'c')
 	{
-	case 'c':
-		return (print_char(va_arg(*args, int), spec));
-	case 's':
-		return (print_str(va_arg(*args, char *), spec));
-	case 'd':
-	case 'i':
-	case 'u':
-		return (print_dec(va_arg(*args, int), spec));
-	case 'x':
-	case 'X':
-		return (print_hex(va_arg(*args, int), spec));
-	case 'p':
-		return (print_ptr(va_arg(*args, void *), spec));
-	case '%':
-		ft_putchar_fd('%', 1);
-		return (1);
+		if (!(s = malloc(1)))
+			return (-1);
+		s[0] = (char)va_arg(*args, int);
 	}
-	return (-1);
+	else if (spec->specifier == 's')
+	{
+		s = va_arg(*args, char *);
+		s = ft_strdup(s ? s : "(null)");
+	}
+	else if (ft_contains(spec->specifier, "di"))
+		s = ft_lltoa(va_arg(*args, int));
+	else if (ft_contains(spec->specifier, "u"))
+		s = ft_lltoa(va_arg(*args, unsigned int));
+	else if (spec->specifier == 'x')
+		s = ft_lltoa_base(va_arg(*args, int), "0123456789abcdef");
+	else if (spec->specifier == 'X')
+		s = ft_lltoa_base(va_arg(*args, int), "0123456789ABCDEF");
+	else if (spec->specifier == 'p')
+		s = ft_ptrtoa(va_arg(*args, void *));
+	else if (spec->specifier == '%')
+		s = ft_strdup("\%");
+	else
+		return (-1);
+	adjust_width(&s, spec); // width, zero, minus
+	n_chars = ft_strlen(s);
+	ft_putstr_fd(s, 1);
+	free(s);
+	return (n_chars);
 }
 
 int parse_spec_width(va_list *args, t_spec *spec)
 {
 	if (spec->width_star)
-		spec->width_value = va_arg(*args, int);
+		spec->width = va_arg(*args, int);
 	return (0);
 }
 
 int parse_spec_precision(va_list *args, t_spec *spec)
 {
 	if (spec->precision_star)
-		spec->precision_value = va_arg(*args, int);
+		spec->precision = va_arg(*args, int);
 	return (0);
 }
 
