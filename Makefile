@@ -22,7 +22,7 @@ all:		$(NAME)
 			${CC} ${CFLAGS} -I${INCDIR} -I$(LIBFTDIR) -c $< -o ${<:.c=.o}
 
 $(LIBFT):
-			$(MAKE) -C $(LIBFTDIR)
+			$(MAKE) bonus -C $(LIBFTDIR)
 
 $(NAME):	$(OBJS) $(LIBFT)
 			cp libft/libft.a ./$(NAME)
