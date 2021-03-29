@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/03/29 14:43:28 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/03/29 14:46:46 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void init_spec(t_spec *spec)
 	spec->width_star = 0;
 	spec->dot = 0;
 	spec->precision = 0;
-	spec->precision_set = 0;
 	spec->precision_star = 0;
 }
 
@@ -53,17 +52,11 @@ int parse_spec(const char *fmt, t_spec *spec)
 		//else if (fmt[index] == '0' && !spec->dot && !spec->width)
 		//	spec->zero = 1;
 		else if (ft_isdigit(fmt[index]) && spec->dot)
-		{
-			spec->precision_set = 1;
 			spec->precision = spec->precision * 10 + (fmt[index] - '0');
-		}
 		else if (ft_isdigit(fmt[index]) && !spec->dot)
 			spec->width = spec->width * 10 + (fmt[index] - '0');
 		else if (fmt[index] == '*' && spec->dot)
-		{
-			spec->precision_set = 1;
 			spec->precision_star = 1;
-		}
 		else if (fmt[index] == '*' && !spec->dot)
 			spec->width_star = 1;
 		else
@@ -78,7 +71,7 @@ void prec_adjust(char **s, t_spec *spec)
 	char *holder;
 	int n_chars;
 
-	if (spec->precision_set)
+	if (spec->dot)
 	{
 		n_chars = ft_strlen(*s);
 		// for string it truncates the string

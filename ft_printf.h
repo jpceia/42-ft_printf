@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:36 by jpceia            #+#    #+#             */
-/*   Updated: 2021/03/29 14:40:46 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/03/29 14:46:16 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ typedef struct s_spec
 	char width_star;
 	char dot;
 	char precision;
-	char precision_set;
 	char precision_star;
 } t_spec;
 
