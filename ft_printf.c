@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/03/29 14:46:46 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/03/29 15:03:30 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,25 @@ int parse_spec(const char *fmt, t_spec *spec)
 void prec_adjust(char **s, t_spec *spec)
 {
 	char *holder;
-	int n_chars;
 
 	if (spec->dot)
 	{
-		n_chars = ft_strlen(*s);
-		// for string it truncates the string
-		if (spec->type == 's' && spec->precision < n_chars)
+		if (spec->type == 's')
 		{
-			holder = *s;
-			*s = ft_substr(holder, 0, spec->precision);
-			free(holder);
+			if (!*s)
+			{
+				*s = ft_strdup(spec->precision < 6 ? "" : "(null)");
+				return;
+			}
+			// for string it truncates the string
+			if (spec->precision < (char)ft_strlen(*s))
+			{
+				holder = *s;
+				*s = ft_substr(holder, 0, spec->precision);
+				free(holder);
+			}
+			// for numeric
 		}
-		// for numeric
 	}
 }
 
@@ -91,8 +97,10 @@ void width_adjust(char **s, t_spec *spec)
 	int n_chars;
 	int padding;
 
-	n_chars = ft_strlen(*s);
 	padding = 0;
+	if (!*s && spec->type == 's')
+		*s = ft_strdup("(null)");
+	n_chars = ft_strlen(*s);
 	if (spec->width > n_chars && spec->type != '%')
 	{
 		holder = *s;
@@ -119,7 +127,7 @@ int print_arg(va_list *args, t_spec *spec)
 	else if (spec->type == 's')
 	{
 		s = va_arg(*args, char *);
-		s = ft_strdup(s ? s : "(null)");
+		s = ft_strdup(s);
 	}
 	else if (ft_contains(spec->type, "di"))
 		s = ft_lltoa(va_arg(*args, int));
