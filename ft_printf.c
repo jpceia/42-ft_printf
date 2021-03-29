@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/03/29 15:12:31 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/03/29 15:34:31 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int parse_spec(const char *fmt, t_spec *spec)
 
 void prec_adjust(char **s, t_spec *spec)
 {
+	int n_chars;
 	char *holder;
 
 	if (spec->dot)
@@ -87,6 +88,18 @@ void prec_adjust(char **s, t_spec *spec)
 				free(holder);
 			}
 			// for numeric
+		}
+		else if (ft_contains(spec->type, "diuoxX"))
+		{
+			n_chars = ft_strlen(*s);
+			if (spec->precision > n_chars)
+			{
+				holder = *s;
+				*s = malloc(spec->precision);
+				ft_memset(*s, '0', spec->precision);
+				ft_memcpy(*s + spec->precision - n_chars, holder, n_chars);
+				free(holder);
+			}
 		}
 	}
 }
