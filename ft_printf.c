@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/03/29 15:34:31 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/03/29 15:46:26 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,12 +130,15 @@ int print_arg(va_list *args, t_spec *spec)
 {
 	int n_chars;
 	char *s;
+	char c;
 
 	if (spec->type == 'c')
 	{
-		if (!(s = malloc(1)))
+		c = (char)va_arg(*args, int);
+		if (!(s = malloc(2)))
 			return (-1);
-		s[0] = (char)va_arg(*args, int);
+		s[0] = c ? c : 1; // is this correct?
+		s[1] = '\0';
 	}
 	else if (spec->type == 's')
 	{
