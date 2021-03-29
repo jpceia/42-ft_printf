@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/03/29 13:25:12 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/03/29 13:30:57 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,18 @@ int adjust_width(char **s, t_spec *spec)
 {
 	char *holder;
 	int n_chars;
+	int padding;
 
 	n_chars = ft_strlen(*s);
+	padding = 0;
 	if (spec->width > n_chars && spec->type != '%')
 	{
 		holder = *s;
 		*s = malloc(spec->width);
-		ft_memcpy(*s + spec->width - n_chars, holder, n_chars);
-		ft_memset(*s, ' ', spec->width - n_chars);
+		ft_memset(*s, ' ', spec->width);
+		if (!spec->minus)
+			padding = spec->width - n_chars;
+		ft_memcpy(*s + padding, holder, n_chars);
 		free(holder);
 	}
 	return (1);
