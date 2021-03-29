@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/03/29 07:20:16 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/03/29 13:25:12 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int ft_contains(char c, char const *charset)
 
 void init_spec(t_spec *spec)
 {
-	spec->specifier = 0;
+	spec->type = 0;
 	spec->minus = 0;
 	spec->width = 0;
 	spec->width_star = 0;
@@ -42,7 +42,7 @@ int parse_spec(const char *fmt, t_spec *spec)
 	{
 		if (ft_contains(fmt[index], "cspdiuxX%%"))
 		{
-			spec->specifier = fmt[index];
+			spec->type = fmt[index];
 			return (index);
 		}
 		else if (fmt[index] == '-')
@@ -70,7 +70,7 @@ int adjust_width(char **s, t_spec *spec)
 	int n_chars;
 
 	n_chars = ft_strlen(*s);
-	if (spec->width > n_chars && spec->specifier != '%')
+	if (spec->width > n_chars && spec->type != '%')
 	{
 		holder = *s;
 		*s = malloc(spec->width);
@@ -86,28 +86,28 @@ int print_arg(va_list *args, t_spec *spec)
 	int n_chars;
 	char *s;
 
-	if (spec->specifier == 'c')
+	if (spec->type == 'c')
 	{
 		if (!(s = malloc(1)))
 			return (-1);
 		s[0] = (char)va_arg(*args, int);
 	}
-	else if (spec->specifier == 's')
+	else if (spec->type == 's')
 	{
 		s = va_arg(*args, char *);
 		s = ft_strdup(s ? s : "(null)");
 	}
-	else if (ft_contains(spec->specifier, "di"))
+	else if (ft_contains(spec->type, "di"))
 		s = ft_lltoa(va_arg(*args, int));
-	else if (ft_contains(spec->specifier, "u"))
+	else if (ft_contains(spec->type, "u"))
 		s = ft_lltoa(va_arg(*args, unsigned int));
-	else if (spec->specifier == 'x')
+	else if (spec->type == 'x')
 		s = ft_lltoa_base(va_arg(*args, int), "0123456789abcdef");
-	else if (spec->specifier == 'X')
+	else if (spec->type == 'X')
 		s = ft_lltoa_base(va_arg(*args, int), "0123456789ABCDEF");
-	else if (spec->specifier == 'p')
+	else if (spec->type == 'p')
 		s = ft_ptrtoa(va_arg(*args, void *));
-	else if (spec->specifier == '%')
+	else if (spec->type == '%')
 		s = ft_strdup("\%");
 	else
 		return (-1);
