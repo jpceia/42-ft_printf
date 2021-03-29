@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/03/29 15:03:30 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/03/29 15:12:31 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,14 @@ int parse_spec_width(va_list *args, t_spec *spec)
 int parse_spec_precision(va_list *args, t_spec *spec)
 {
 	if (spec->precision_star)
+	{
 		spec->precision = va_arg(*args, int);
+		if (spec->precision < 0)
+		{
+			spec->dot = 0;
+			spec->precision = 0;
+		}
+	}
 	return (0);
 }
 
