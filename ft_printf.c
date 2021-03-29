@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/03/29 07:06:23 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/03/29 07:20:16 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int adjust_width(char **s, t_spec *spec)
 	int n_chars;
 
 	n_chars = ft_strlen(*s);
-	if (spec->width > n_chars)
+	if (spec->width > n_chars && spec->specifier != '%')
 	{
 		holder = *s;
 		*s = malloc(spec->width);
