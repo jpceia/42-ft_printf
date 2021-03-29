@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 06:30:12 by jpceia            #+#    #+#             */
-/*   Updated: 2021/03/29 06:55:42 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/03/29 14:12:21 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,17 @@ char *ft_lltoa_base(long long nb, const char *base)
 		return (NULL);
 	if (!(buf = malloc(64)))
 		return (NULL);
+	if (nb == 0)
+	{
+		buf[0] = base[0];
+		buf[1] = '\0';
+		return (buf);
+	}
 	index = 63;
 	buf[index--] = '\0';
 	sign = (nb < 0);
 	if (!sign)
 		nb = -nb;
-	else if (nb == 0)
-		return ("0");
 	while (nb && index)
 	{
 		buf[index--] = base[-nb % base_size];
