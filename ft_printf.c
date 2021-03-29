@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/03/29 13:30:57 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/03/29 14:43:28 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void init_spec(t_spec *spec)
 	spec->width = 0;
 	spec->width_star = 0;
 	spec->dot = 0;
-	spec->precision = 6;
+	spec->precision = 0;
+	spec->precision_set = 0;
 	spec->precision_star = 0;
 }
 
@@ -49,12 +50,20 @@ int parse_spec(const char *fmt, t_spec *spec)
 			spec->minus = 1;
 		else if (fmt[index] == '.')
 			spec->dot = 1;
+		//else if (fmt[index] == '0' && !spec->dot && !spec->width)
+		//	spec->zero = 1;
 		else if (ft_isdigit(fmt[index]) && spec->dot)
+		{
+			spec->precision_set = 1;
 			spec->precision = spec->precision * 10 + (fmt[index] - '0');
+		}
 		else if (ft_isdigit(fmt[index]) && !spec->dot)
 			spec->width = spec->width * 10 + (fmt[index] - '0');
 		else if (fmt[index] == '*' && spec->dot)
+		{
+			spec->precision_set = 1;
 			spec->precision_star = 1;
+		}
 		else if (fmt[index] == '*' && !spec->dot)
 			spec->width_star = 1;
 		else
@@ -64,7 +73,26 @@ int parse_spec(const char *fmt, t_spec *spec)
 	return (-1);
 }
 
-int adjust_width(char **s, t_spec *spec)
+void prec_adjust(char **s, t_spec *spec)
+{
+	char *holder;
+	int n_chars;
+
+	if (spec->precision_set)
+	{
+		n_chars = ft_strlen(*s);
+		// for string it truncates the string
+		if (spec->type == 's' && spec->precision < n_chars)
+		{
+			holder = *s;
+			*s = ft_substr(holder, 0, spec->precision);
+			free(holder);
+		}
+		// for numeric
+	}
+}
+
+void width_adjust(char **s, t_spec *spec)
 {
 	char *holder;
 	int n_chars;
@@ -82,7 +110,6 @@ int adjust_width(char **s, t_spec *spec)
 		ft_memcpy(*s + padding, holder, n_chars);
 		free(holder);
 	}
-	return (1);
 }
 
 int print_arg(va_list *args, t_spec *spec)
@@ -115,7 +142,8 @@ int print_arg(va_list *args, t_spec *spec)
 		s = ft_strdup("\%");
 	else
 		return (-1);
-	adjust_width(&s, spec); // width, zero, minus
+	prec_adjust(&s, spec);
+	width_adjust(&s, spec); // width, zero, minus
 	n_chars = ft_strlen(s);
 	ft_putstr_fd(s, 1);
 	free(s);
