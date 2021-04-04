@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:49:52 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 13:06:30 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 22:02:34 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,31 @@ char *adjust_format_precision_unsigned(char *s, size_t n_digits)
 	return (s);
 }
 
-char *adjust_format_unsigned(char *s, t_spec *spec)
+char	*adjust_format_unsigned(char *s, t_spec spec)
 {
-	if (spec->precision > 0)
-		s = adjust_format_precision_unsigned(s, spec->precision);
-	else if (spec->dot && spec->precision == 0 && *s == '0')
+	if (spec.precision > 0)
+		s = adjust_format_precision_unsigned(s, spec.precision);
+	else if (spec.dot && spec.precision == 0 && *s == '0')
 	{
 		free(s);
 		s = ft_strdup("");
 	}
-	if (spec->width && spec->zero && spec->precision <= 0)
-		s = adjust_format_precision_unsigned(s, spec->width);	
-	return (adjust_format_width_space(s, spec->width, spec->minus));
+	if (spec.width && spec.zero && spec.precision <= 0)
+		s = adjust_format_precision_unsigned(s, spec.width);	
+	return (adjust_format_width_space(s, spec.width, spec.minus));
 }
 
-char	*str_arg_unsigned(va_list *args, t_spec *spec)
+int	print_unsigned(va_list *args, t_spec spec)
 {
 	char	*s;
 
-	if (ft_contains(spec->type, "u"))
+	if (ft_contains(spec.type, "u"))
 		s = ft_lltoa(va_arg(*args, unsigned int));
-	else if (spec->type == 'x')
+	else if (spec.type == 'x')
 		s = ft_lltoa_base(va_arg(*args, unsigned int), "0123456789abcdef");
-	else if (spec->type == 'X')
+	else if (spec.type == 'X')
 		s = ft_lltoa_base(va_arg(*args, unsigned int), "0123456789ABCDEF");
 	s = adjust_format_unsigned(s, spec);
-	return (s);
+	ft_putstr_fd(s, STDOUT_FILENO);
+	return (ft_strlen(s));
 }

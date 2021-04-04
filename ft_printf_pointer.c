@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_ptr.c                                    :+:      :+:    :+:   */
+/*   ft_printf_pointer.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:50:40 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 13:22:00 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 21:58:07 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_ptrtoa(unsigned long nb)
 	return (s);
 }
 
-char	*str_arg_pointer(va_list *args, t_spec *spec)
+int		print_pointer(va_list *args, t_spec spec)
 {
 	unsigned long	nb;
 	char 			*s;
@@ -36,5 +36,7 @@ char	*str_arg_pointer(va_list *args, t_spec *spec)
 		s = ft_strdup("(nil)");
 	else
 		s = ft_ptrtoa(nb);
-	return (adjust_format_width_space(s, spec->width, spec->minus));
+	s = adjust_format_width_space(s, spec.width, spec.minus);
+	ft_putstr_fd(s, STDOUT_FILENO);
+	return (ft_strlen(s));
 }

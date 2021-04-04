@@ -7,7 +7,7 @@ SRCS		= \
 			ft_printf.c			\
 			ft_printf_utils.c	\
 			ft_printf_parse.c	\
-			ft_printf_string.c		\
+			ft_printf_string.c	\
 			ft_printf_signed.c	\
 			ft_printf_unsigned.c \
 			ft_printf_pointer.c

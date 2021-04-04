@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:30:54 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 21:27:03 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 21:58:17 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int	parse_spec(const char *fmt, t_spec *spec)
 	int	index;
 	int	status;
 
+	init_spec(spec);
 	index = 0;
 	status = PFT_CONTINUE;
 	if (fmt[index] != '%')
