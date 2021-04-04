@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 20:58:04 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 21:26:42 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,6 @@ int	print_arg(va_list *args, t_spec *spec)
 	return (n_chars);
 }
 
-int	parse_spec_star(va_list *args, t_spec *spec)
-{
-	if (spec->width_star)
-		spec->width = va_arg(*args, int);
-	if (spec->precision_star)
-	{
-		spec->precision = va_arg(*args, int);
-		if (spec->precision < 0)
-		{
-			spec->dot = 0;
-			spec->precision = 0;
-		}
-	}
-	return (0);
-}
-
 int	parse_and_print_item(const char **fmt, va_list *args)
 {
 	int		index;
@@ -63,11 +47,10 @@ int	parse_and_print_item(const char **fmt, va_list *args)
 		return (-1);
 	init_spec(&spec);
 	index = parse_spec(*fmt, &spec);
-	*fmt = *fmt + 1;
 	parse_spec_star(args, &spec);
 	if (index < 0)
-		return (-1);
-	*fmt = *fmt + index;
+		return (PFT_ERR);
+	*fmt = *fmt + index + 1;
 	return (print_arg(args, &spec));
 }
 
