@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 12:47:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 13:25:38 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 21:29:35 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_spec
 
 void	init_spec(t_spec *spec);
 int		parse_spec(const char *fmt, t_spec *spec);
+int		parse_spec_star(va_list *args, t_spec *spec);
 char	*ft_ptrtoa(unsigned long ptr);
 char	*str_arg_char(va_list *args, t_spec *spec);
 char	*str_arg_str(va_list *args, t_spec *spec);
