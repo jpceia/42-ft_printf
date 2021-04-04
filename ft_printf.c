@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 09:53:04 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 10:21:45 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,9 @@ int	print_arg(va_list *args, t_spec *spec)
 {
 	int		n_chars;
 	char	*s;
-	char	c;
 
 	if (spec->type == 'c')
-		s = str_arg_c(args, spec);
+		s = str_arg_char(args, spec);
 	else if (spec->type == 's')
 		s = str_arg_str(args, spec);
 	else if (ft_contains(spec->type, "diuxX"))
@@ -69,25 +68,35 @@ int	parse_and_print_item(const char **fmt, va_list *args)
 	return (print_arg(args, &spec));
 }
 
+int ft_vprintf(const char *fmt, va_list args)
+{
+	va_list args_copy;
+	int		n;
+	int		i;
+
+	n = 0;
+	va_copy(args_copy, args);
+	while (*fmt)
+	{
+		i = 1;
+		if (*fmt == '%')
+			i = parse_and_print_item(&fmt, &args_copy);
+		else
+			ft_putchar_fd(*(fmt++), 1);
+		if (i < 0)
+			return (PFT_ERR);
+		n += i;
+	}
+	return (n);
+}
+
 int	ft_printf(const char *fmt, ...)
 {
 	va_list	args;
-	int		r;
-	int		ret;
+	int		n;
 
 	va_start(args, fmt);
-	ret = 0;
-	while (*fmt)
-	{
-		r = 1;
-		if (*fmt == '%')
-			r = parse_and_print_item(&fmt, &args);
-		else
-			ft_putchar_fd(*(fmt++), 1);
-		if (r < 0)
-			return (-1);
-		ret += r;
-	}
+	n = ft_vprintf(fmt, args);
 	va_end(args);
-	return (ret);
+	return (n);
 }

@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:53:14 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 09:53:27 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 10:23:50 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 char	*str_arg_char(va_list *args, t_spec *spec)
 {
+	(void)spec;
+	char	*s;
+	char	c;
+	
 	s = ft_strdup(" ");
 	c = (char)va_arg(*args, int);
 	if (c)
@@ -23,6 +27,7 @@ char	*str_arg_char(va_list *args, t_spec *spec)
 
 char	*str_arg_str(va_list *args, t_spec *spec)
 {
+	(void)spec;
 	char	*s;
 
 	s = va_arg(*args, char *);
