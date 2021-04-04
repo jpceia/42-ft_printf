@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 22:13:14 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 23:20:11 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ int	parse_and_print_item(const char **fmt, va_list *args)
 	return (print_arg(args, spec));
 }
 
-int ft_vprintf(const char *fmt, va_list args)
+int	ft_vprintf(const char *fmt, va_list args)
 {
-	va_list args_copy;
+	va_list	args_copy;
 	int		n;
 	int		i;
 

@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:30:54 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 21:58:17 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 23:23:09 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	init_spec(t_spec *spec)
 {
 	spec->type = 0;
 	spec->minus = 0;
+	spec->space = 0;
 	spec->zero = 0;
 	spec->width = 0;
 	spec->width_star = 0;
@@ -26,9 +27,7 @@ void	init_spec(t_spec *spec)
 
 int	parse_spec_loop(char c, t_spec *spec)
 {
-	if (!c)
-		return (PFT_ERR);
-	else if (ft_contains(c, "cspdiuxX%%"))
+	if (ft_contains(c, "cspdiuxX%%"))
 	{
 		spec->type = c;
 		return (PFT_STOP);
@@ -37,6 +36,8 @@ int	parse_spec_loop(char c, t_spec *spec)
 		spec->minus = 1;
 	else if (c == '.')
 		spec->dot = 1;
+	else if (c == ' ')
+		spec->space = 1;
 	else if (c == '0' && !spec->dot && !spec->width)
 		spec->zero = 1;
 	else if (ft_isdigit(c) && spec->dot)
@@ -72,7 +73,14 @@ int	parse_spec(const char *fmt, t_spec *spec)
 int	parse_spec_star(va_list *args, t_spec *spec)
 {
 	if (spec->width_star)
+	{
 		spec->width = va_arg(*args, int);
+		if (spec->width < 0)
+		{
+			spec->minus = 1;
+			spec->width = -spec->width;
+		}
+	}
 	if (spec->precision_star)
 	{
 		spec->precision = va_arg(*args, int);

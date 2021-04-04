@@ -6,19 +6,19 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 12:03:44 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 22:04:16 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 23:19:25 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_utils.h"
 
-char *adjust_format_width_space(char *s, int width, int left)
+char	*adjust_format_width_space(char *s, int width, int left)
 {
 	char	*s1;
 	char	*s2;
 	int		len;
 	int		n_chars;
-	
+
 	n_chars = ft_strlen(s);
 	if (width > n_chars)
 	{

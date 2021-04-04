@@ -6,13 +6,13 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:49:52 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 22:02:11 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 23:21:39 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_utils.h"
 
-static char *adjust_format_negative(char *s, t_spec spec)
+char	*adjust_format_negative(char *s, t_spec spec)
 {
 	char	*s1;
 	char	*s2;
@@ -29,16 +29,21 @@ static char *adjust_format_negative(char *s, t_spec spec)
 	return (adjust_format_width_space(s, spec.width, spec.minus));
 }
 
-int		print_signed(va_list *args, t_spec spec)
+int	print_signed(va_list *args, t_spec spec)
 {
+	int		n_chars;
 	long	nb;
 	char	*s;
-	
+
+	if (spec.minus)
+		spec.zero = 0;
 	nb = va_arg(*args, int);
 	if (nb >= 0)
 		s = adjust_format_unsigned(ft_lltoa(nb), spec);
 	else
 		s = adjust_format_negative(ft_lltoa(-nb), spec);
 	ft_putstr_fd(s, STDOUT_FILENO);
-	return (ft_strlen(s));
+	n_chars = ft_strlen(s);
+	free(s);
+	return (n_chars);
 }
