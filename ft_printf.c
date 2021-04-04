@@ -6,70 +6,17 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/03/29 15:46:26 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 09:34:27 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int ft_contains(char c, char const *charset)
-{
-	while (*charset)
-		if (c == *charset++)
-			return (1);
-	return (0);
-}
 
-void init_spec(t_spec *spec)
+void	prec_adjust(char **s, t_spec *spec)
 {
-	spec->type = 0;
-	spec->minus = 0;
-	spec->width = 0;
-	spec->width_star = 0;
-	spec->dot = 0;
-	spec->precision = 0;
-	spec->precision_star = 0;
-}
-
-int parse_spec(const char *fmt, t_spec *spec)
-{
-	int index;
-
-	if (fmt[0] != '%')
-		return (-1);
-	index = 1;
-	while (fmt[index])
-	{
-		if (ft_contains(fmt[index], "cspdiuxX%%"))
-		{
-			spec->type = fmt[index];
-			return (index);
-		}
-		else if (fmt[index] == '-')
-			spec->minus = 1;
-		else if (fmt[index] == '.')
-			spec->dot = 1;
-		//else if (fmt[index] == '0' && !spec->dot && !spec->width)
-		//	spec->zero = 1;
-		else if (ft_isdigit(fmt[index]) && spec->dot)
-			spec->precision = spec->precision * 10 + (fmt[index] - '0');
-		else if (ft_isdigit(fmt[index]) && !spec->dot)
-			spec->width = spec->width * 10 + (fmt[index] - '0');
-		else if (fmt[index] == '*' && spec->dot)
-			spec->precision_star = 1;
-		else if (fmt[index] == '*' && !spec->dot)
-			spec->width_star = 1;
-		else
-			return (-1);
-		index++;
-	}
-	return (-1);
-}
-
-void prec_adjust(char **s, t_spec *spec)
-{
-	int n_chars;
-	char *holder;
+	int		n_chars;
+	char	*holder;
 
 	if (spec->dot)
 	{
@@ -77,17 +24,18 @@ void prec_adjust(char **s, t_spec *spec)
 		{
 			if (!*s)
 			{
-				*s = ft_strdup(spec->precision < 6 ? "" : "(null)");
-				return;
+				if (spec->precision < 6)
+					*s = ft_strdup("");
+				else
+					*s = ft_strdup("(null)");
+				return ;
 			}
-			// for string it truncates the string
 			if (spec->precision < (char)ft_strlen(*s))
 			{
 				holder = *s;
 				*s = ft_substr(holder, 0, spec->precision);
 				free(holder);
 			}
-			// for numeric
 		}
 		else if (ft_contains(spec->type, "diuoxX"))
 		{
@@ -104,21 +52,23 @@ void prec_adjust(char **s, t_spec *spec)
 	}
 }
 
-void width_adjust(char **s, t_spec *spec)
+void	width_adjust(char **s, t_spec *spec)
 {
-	char *holder;
-	int n_chars;
-	int padding;
+	char	*holder;
+	int		n_chars;
+	int		padding;
+	char	pad_char;
 
 	padding = 0;
 	if (!*s && spec->type == 's')
 		*s = ft_strdup("(null)");
 	n_chars = ft_strlen(*s);
+	pad_char = ' ';
 	if (spec->width > n_chars && spec->type != '%')
 	{
 		holder = *s;
 		*s = malloc(spec->width);
-		ft_memset(*s, ' ', spec->width);
+		ft_memset(*s, pad_char, spec->width);
 		if (!spec->minus)
 			padding = spec->width - n_chars;
 		ft_memcpy(*s + padding, holder, n_chars);
@@ -126,18 +76,19 @@ void width_adjust(char **s, t_spec *spec)
 	}
 }
 
-int print_arg(va_list *args, t_spec *spec)
+int	print_arg(va_list *args, t_spec *spec)
 {
-	int n_chars;
-	char *s;
-	char c;
+	int		n_chars;
+	char	*s;
+	char	c;
 
 	if (spec->type == 'c')
 	{
 		c = (char)va_arg(*args, int);
-		if (!(s = malloc(2)))
+		s = malloc(2);
+		if (!s)
 			return (-1);
-		s[0] = c ? c : 1; // is this correct?
+		s[0] = c;
 		s[1] = '\0';
 	}
 	else if (spec->type == 's')
@@ -160,21 +111,21 @@ int print_arg(va_list *args, t_spec *spec)
 	else
 		return (-1);
 	prec_adjust(&s, spec);
-	width_adjust(&s, spec); // width, zero, minus
+	width_adjust(&s, spec);
 	n_chars = ft_strlen(s);
 	ft_putstr_fd(s, 1);
 	free(s);
 	return (n_chars);
 }
 
-int parse_spec_width(va_list *args, t_spec *spec)
+int	parse_spec_width(va_list *args, t_spec *spec)
 {
 	if (spec->width_star)
 		spec->width = va_arg(*args, int);
 	return (0);
 }
 
-int parse_spec_precision(va_list *args, t_spec *spec)
+int	parse_spec_precision(va_list *args, t_spec *spec)
 {
 	if (spec->precision_star)
 	{
@@ -188,10 +139,10 @@ int parse_spec_precision(va_list *args, t_spec *spec)
 	return (0);
 }
 
-int parse_spec_print_arg(const char **fmt, va_list *args)
+int	parse_spec_print_arg(const char **fmt, va_list *args)
 {
-	int index;
-	t_spec spec;
+	int		index;
+	t_spec	spec;
 
 	if (**fmt != '%')
 		return (-1);
@@ -206,11 +157,11 @@ int parse_spec_print_arg(const char **fmt, va_list *args)
 	return (print_arg(args, &spec));
 }
 
-int ft_printf(const char *fmt, ...)
+int	ft_printf(const char *fmt, ...)
 {
-	va_list args;
-	int r;
-	int ret;
+	va_list	args;
+	int		r;
+	int		ret;
 
 	va_start(args, fmt);
 	ret = 0;
