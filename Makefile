@@ -5,10 +5,12 @@ LIBFT		= libft/libft.a
 
 SRCS		= \
 			ft_printf.c			\
-			ft_printf_type.c	\
+			ft_printf_utils.c	\
 			ft_printf_parse.c	\
-			ft_printf_str.c		\
-			ft_printf_numeric.c
+			ft_printf_string.c		\
+			ft_printf_signed.c	\
+			ft_printf_unsigned.c \
+			ft_printf_pointer.c
 
 OBJS		= $(SRCS:.c=.o)
 
@@ -19,7 +21,7 @@ CC			= gcc
 AR			= ar rc
 RM			= rm -f
 
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g
 
 all:		$(NAME)
 
