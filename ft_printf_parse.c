@@ -6,16 +6,17 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:30:54 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 09:33:46 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 13:07:25 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_utils.h"
 
 void	init_spec(t_spec *spec)
 {
 	spec->type = 0;
 	spec->minus = 0;
+	spec->zero = 0;
 	spec->width = 0;
 	spec->width_star = 0;
 	spec->dot = 0;

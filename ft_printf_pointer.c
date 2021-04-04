@@ -1,26 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_type.c                                   :+:      :+:    :+:   */
+/*   ft_printf_ptr.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:50:40 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 09:50:50 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 13:22:00 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_utils.h"
 
-char	*ft_ptrtoa(void *ptr)
+char	*ft_ptrtoa(unsigned long nb)
 {
 	char	*hex;
-	char	*out;
+	char    *pre;
+	char	*s;
 
-	if (!ptr)
-		return (ft_strdup("(nil)"));
-	hex = ft_lltoa_base((unsigned long)ptr, "0123456789abcdef");
-	out = ft_strjoin("0x", hex);
+	hex = ft_lltoa_base(nb, "0123456789abcdef");
+	pre = ft_strdup("0x");
+	s = ft_strjoin(pre, hex);
+	free(pre);
 	free(hex);
-	return (out);
+	return (s);
+}
+
+char	*str_arg_pointer(va_list *args, t_spec *spec)
+{
+	unsigned long	nb;
+	char 			*s;
+
+	nb = va_arg(*args, unsigned long);
+	if (!nb)
+		s = ft_strdup("(nil)");
+	else
+		s = ft_ptrtoa(nb);
+	return (adjust_format_width_space(s, spec->width, spec->minus));
 }

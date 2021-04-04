@@ -6,10 +6,11 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 10:21:45 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 20:58:04 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf_utils.h"
 #include "ft_printf.h"
 
 int	print_arg(va_list *args, t_spec *spec)
@@ -21,10 +22,12 @@ int	print_arg(va_list *args, t_spec *spec)
 		s = str_arg_char(args, spec);
 	else if (spec->type == 's')
 		s = str_arg_str(args, spec);
-	else if (ft_contains(spec->type, "diuxX"))
-		s = str_arg_numeric(args, spec);
+	else if (ft_contains(spec->type, "di"))
+		s = str_arg_signed(args, spec);
+	else if (ft_contains(spec->type, "uxX"))
+		s = str_arg_unsigned(args, spec);
 	else if (spec->type == 'p')
-		s = ft_ptrtoa(va_arg(*args, void *));
+		s = str_arg_pointer(args, spec);
 	else if (spec->type == '%')
 		s = ft_strdup("\%");
 	else
