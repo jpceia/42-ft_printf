@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_unsigned.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:49:52 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 23:38:32 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/09 17:39:12 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	print_unsigned(va_list *args, t_spec spec)
 	int		n_chars;
 	char	*s;
 
+	s = NULL;
 	if (ft_contains(spec.type, "u"))
 		s = ft_lltoa(va_arg(*args, unsigned int));
 	else if (spec.type == 'x')
@@ -82,6 +83,8 @@ int	print_unsigned(va_list *args, t_spec spec)
 		if (spec.hash)
 			s = add_left_char(add_left_char(s, 'X'), '0');
 	}
+	else
+		return (PFT_ERR);
 	s = adjust_format_unsigned(s, spec);
 	ft_putstr_fd(s, STDOUT_FILENO);
 	n_chars = ft_strlen(s);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/08 21:42:48 by jpceia            #+#    #+#             */
-/*   Updated: 2021/02/09 21:37:58 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/09 17:54:33 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	*ft_bzero(void *str, size_t n)
 {
 	char	*ptr;
 
-	ptr = (char*)str;
+	ptr = (char *)str;
 	while ((size_t)(ptr - (char *)str) < n)
 		*(ptr++) = 0;
 	return (str);

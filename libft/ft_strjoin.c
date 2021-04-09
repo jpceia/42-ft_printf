@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/05 03:42:08 by jceia             #+#    #+#             */
-/*   Updated: 2021/02/15 21:36:56 by jceia            ###   ########.fr       */
+/*   Updated: 2021/04/09 17:50:14 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*ft_strcat(char *dest, const char *src)
 	return (dest);
 }
 
-char		*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		size;
 	char	*res;

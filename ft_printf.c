@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 23:20:11 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/09 17:44:36 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	print_arg(va_list *args, t_spec spec)
 	if (spec.type == 'p')
 		return (print_pointer(args, spec));
 	if (spec.type == '%')
-		return (print_percentage());
+		return (print_percentage(args, spec));
 	return (PFT_ERR);
 }
 

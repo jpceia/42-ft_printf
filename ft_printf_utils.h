@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_utils.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 12:47:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 23:27:12 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/09 17:45:00 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_spec
 
 int		parse_spec(const char *fmt, t_spec *spec);
 int		parse_spec_star(va_list *args, t_spec *spec);
-int		print_percentage(void);
+int		print_percentage(va_list *args, t_spec spec);
 int		print_char(va_list *args, t_spec spec);
 int		print_string(va_list *args, t_spec spec);
 int		print_signed(va_list *args, t_spec spec);

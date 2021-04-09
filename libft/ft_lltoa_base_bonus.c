@@ -3,26 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lltoa_base_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 06:30:12 by jpceia            #+#    #+#             */
-/*   Updated: 2021/03/29 14:12:21 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/09 17:54:09 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_bonus.h"
 
-char *ft_lltoa_base(long long nb, const char *base)
+char	*ft_lltoa_base(long long nb, const char *base)
 {
-	int base_size;
-	int index;
-	int sign;
-	char *buf;
+	int		base_size;
+	int		index;
+	int		sign;
+	char	*buf;
 
 	base_size = ft_strlen(base);
 	if (base_size <= 1)
 		return (NULL);
-	if (!(buf = malloc(64)))
+	buf = malloc(64);
+	if (!buf)
 		return (NULL);
 	if (nb == 0)
 	{

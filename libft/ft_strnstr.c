@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 16:42:45 by jpceia            #+#    #+#             */
-/*   Updated: 2021/02/15 21:37:15 by jceia            ###   ########.fr       */
+/*   Updated: 2021/04/09 17:50:52 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	while (haystack[index] && index < len)
 	{
 		k = 0;
-		while (needle[k] && index + k < len &&
-				haystack[index + k] == needle[k])
+		while (needle[k] && index + k < len && haystack[index + k] == needle[k])
 			k++;
 		if (!needle[k])
-			return ((char*)(haystack + index));
+			return ((char *)(haystack + index));
 		index++;
 	}
 	return (NULL);

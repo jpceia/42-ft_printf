@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lltoa_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 06:08:23 by jpceia            #+#    #+#             */
-/*   Updated: 2021/03/29 14:12:49 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/09 17:55:35 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_bonus.h"
 
-char *ft_lltoa(long long nb)
+char	*ft_lltoa(long long nb)
 {
-	int index;
-	int sign;
-	char *buf;
+	int		index;
+	int		sign;
+	char	*buf;
 
-	if (!(buf = malloc(21)))
+	buf = malloc(21);
+	if (!buf)
 		return (NULL);
 	if (nb == 0)
 	{
