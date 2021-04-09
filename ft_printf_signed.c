@@ -6,13 +6,13 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:49:52 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 23:21:39 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 23:39:43 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_utils.h"
 
-char	*adjust_format_negative(char *s, t_spec spec)
+char	*adjust_format_signed(char *s, t_spec spec)
 {
 	char	*s1;
 	char	*s2;
@@ -38,10 +38,10 @@ int	print_signed(va_list *args, t_spec spec)
 	if (spec.minus)
 		spec.zero = 0;
 	nb = va_arg(*args, int);
-	if (nb >= 0)
+	if (nb >= 0 && !spec.plus)
 		s = adjust_format_unsigned(ft_lltoa(nb), spec);
 	else
-		s = adjust_format_negative(ft_lltoa(-nb), spec);
+		s = adjust_format_signed(ft_lltoa(-nb), spec);
 	ft_putstr_fd(s, STDOUT_FILENO);
 	n_chars = ft_strlen(s);
 	free(s);

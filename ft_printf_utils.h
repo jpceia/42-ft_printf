@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 12:47:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 23:19:58 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 23:27:12 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ typedef struct s_spec
 {
 	char	type;
 	int		minus;
+	int		plus;
 	int		space;
+	int		hash;
 	int		zero;
 	int		width;
 	int		width_star;

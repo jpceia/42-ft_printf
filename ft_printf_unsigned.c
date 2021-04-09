@@ -6,7 +6,7 @@
 /*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:49:52 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 23:20:37 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/04 23:38:32 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*adjust_format_unsigned(char *s, t_spec spec)
 	}
 	if (spec.width && spec.zero && spec.precision <= 0)
 		s = adjust_format_precision_unsigned(s, spec.width);
-	if (spec.space)
+	if (spec.space && !spec.plus)
 		s = add_left_char(s, ' ');
 	return (adjust_format_width_space(s, spec.width, spec.minus));
 }
@@ -71,9 +71,17 @@ int	print_unsigned(va_list *args, t_spec spec)
 	if (ft_contains(spec.type, "u"))
 		s = ft_lltoa(va_arg(*args, unsigned int));
 	else if (spec.type == 'x')
+	{
 		s = ft_lltoa_base(va_arg(*args, unsigned int), "0123456789abcdef");
+		if (spec.hash)
+			s = add_left_char(add_left_char(s, 'x'), '0');
+	}
 	else if (spec.type == 'X')
+	{
 		s = ft_lltoa_base(va_arg(*args, unsigned int), "0123456789ABCDEF");
+		if (spec.hash)
+			s = add_left_char(add_left_char(s, 'X'), '0');
+	}
 	s = adjust_format_unsigned(s, spec);
 	ft_putstr_fd(s, STDOUT_FILENO);
 	n_chars = ft_strlen(s);
