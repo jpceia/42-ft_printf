@@ -6,12 +6,12 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 12:47:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 20:32:03 by jceia            ###   ########.fr       */
+/*   Updated: 2021/04/12 20:37:24 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_UTILS_H
-# define FT_PRINTF_UTILS_H
+#ifndef FT_PRINTF_INTERNAL_H
+# define FT_PRINTF_INTERNAL_H
 
 # define PFT_ERR		-1
 # define PFT_STOP	 	 0
