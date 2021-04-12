@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:49:52 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 18:34:12 by jceia            ###   ########.fr       */
+/*   Updated: 2021/04/12 19:55:57 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*adjust_format_precision_unsigned(char *s, size_t n_digits)
 {
 	size_t	n_chars;
-	int		len;
+	size_t	len;
 	char	*s1;
 	char	*s2;
 
@@ -23,8 +23,9 @@ char	*adjust_format_precision_unsigned(char *s, size_t n_digits)
 	if (n_chars < n_digits)
 	{
 		len = (int)n_digits - (int)n_chars;
-		s1 = malloc(len);
+		s1 = malloc(len + 1);
 		ft_memset(s1, '0', len);
+		s1[len] = '\0';
 		s2 = ft_strdup(s);
 		free(s);
 		s = ft_strjoin(s1, s2);
@@ -57,7 +58,7 @@ char	*adjust_format_unsigned(char *s, t_spec spec)
 		free(s);
 		s = ft_strdup("");
 	}
-	if (spec.width && spec.zero && spec.precision <= 0)
+	if (spec.width && spec.zero && !spec.dot)
 		s = adjust_format_precision_unsigned(s, spec.width);
 	if (spec.space && !spec.plus)
 		s = add_left_char(s, ' ');
@@ -71,16 +72,16 @@ int	print_unsigned(va_list *args, t_spec spec)
 
 	s = NULL;
 	if (ft_contains(spec.type, "u"))
-		s = ft_lltoa(va_arg(*args, unsigned int));
+		s = ft_ulltoa(va_arg(*args, unsigned int));
 	else if (spec.type == 'x')
 	{
-		s = ft_lltoa_base(va_arg(*args, unsigned int), "0123456789abcdef");
+		s = ft_ulltoa_base(va_arg(*args, unsigned int), "0123456789abcdef");
 		if (spec.hash)
 			s = add_left_char(add_left_char(s, 'x'), '0');
 	}
 	else if (spec.type == 'X')
 	{
-		s = ft_lltoa_base(va_arg(*args, unsigned int), "0123456789ABCDEF");
+		s = ft_ulltoa_base(va_arg(*args, unsigned int), "0123456789ABCDEF");
 		if (spec.hash)
 			s = add_left_char(add_left_char(s, 'X'), '0');
 	}
