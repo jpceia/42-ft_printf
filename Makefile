@@ -3,15 +3,15 @@ INCDIR		= .
 LIBFTDIR	= ./libft
 LIBFT		= libft/libft.a
 
-SRCS		= \
+SRCS		= 					\
 			ft_printf.c			\
-			ft_printf_utils.c	\
-			ft_printf_parse.c	\
-			ft_printf_string.c	\
-			ft_printf_char.c	\
-			ft_printf_signed.c	\
-			ft_printf_unsigned.c \
-			ft_printf_pointer.c
+			utils.c				\
+			parse_spec.c		\
+			print_string.c		\
+			print_char.c		\
+			print_signed.c		\
+			print_unsigned.c 	\
+			print_pointer.c
 
 OBJS		= $(SRCS:.c=.o)
 
@@ -36,11 +36,11 @@ $(NAME):	$(OBJS) $(LIBFT)
 			cp libft/libft.a ./$(NAME)
 			$(AR) $(NAME) $(OBJS) $(LIBFT)
 
-clean:		
+clean:
 			$(MAKE) -C $(LIBFTDIR) clean
 			$(RM) $(OBJS)
 
-fclean:		
+fclean:
 			$(MAKE) -C $(LIBFTDIR) fclean
 			$(RM) $(OBJS)
 			$(RM) $(NAME)

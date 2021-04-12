@@ -1,42 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_pointer.c                                :+:      :+:    :+:   */
+/*   print_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/04 09:50:40 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 19:13:06 by jceia            ###   ########.fr       */
+/*   Created: 2021/04/04 09:53:14 by jpceia            #+#    #+#             */
+/*   Updated: 2021/04/12 20:31:32 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_utils.h"
+#include "ft_printf_internal.h"
 
-char	*ft_ptrtoa(void *ptr)
+char	*adjust_format_precision_str(char *s, int len)
 {
-	char	*hex;
-	char	*pre;
-	char	*s;
+	int	n_chars;
 
-	hex = ft_ulltoa_base((unsigned long long)ptr, "0123456789abcdef");
-	pre = ft_strdup("0x");
-	s = ft_strjoin(pre, hex);
-	free(pre);
-	free(hex);
+	n_chars = ft_strlen(s);
+	if (len >= 0 && len < n_chars)
+		s[len] = '\0';
 	return (s);
 }
 
-int	print_pointer(va_list *args, t_spec spec)
+int	print_string(va_list *args, t_spec spec)
 {
 	int		n_chars;
-	void	*ptr;
 	char	*s;
 
-	ptr = va_arg(*args, void *);
-	if (!ptr)
-		s = ft_strdup("0x0");
-	else
-		s = ft_ptrtoa(ptr);
+	s = va_arg(*args, char *);
+	if (!s)
+		s = "(null)";
+	s = ft_strdup(s);
+	if (spec.dot)
+		s = adjust_format_precision_str(s, spec.precision);
 	s = adjust_format_width_space(s, spec.width, spec.minus);
 	ft_putstr_fd(s, STDOUT_FILENO);
 	n_chars = ft_strlen(s);

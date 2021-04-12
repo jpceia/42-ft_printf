@@ -6,11 +6,11 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 16:12:49 by jceia            ###   ########.fr       */
+/*   Updated: 2021/04/12 20:32:00 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_utils.h"
+#include "ft_printf_internal.h"
 #include "ft_printf.h"
 
 int	print_arg(va_list *args, t_spec spec)

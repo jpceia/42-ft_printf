@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf_parse.c                                  :+:      :+:    :+:   */
+/*   parse_spec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpceia <jpceia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:30:54 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/04 23:31:11 by jpceia           ###   ########.fr       */
+/*   Updated: 2021/04/12 20:31:49 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf_utils.h"
+#include "ft_printf_internal.h"
 
 void	init_spec(t_spec *spec)
 {
