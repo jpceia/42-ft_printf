@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:49:52 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 18:36:55 by jceia            ###   ########.fr       */
+/*   Updated: 2021/04/12 20:21:03 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*adjust_format_signed(char *s, t_spec spec)
 
 	if (spec.precision > 0)
 		s = adjust_format_precision_unsigned(s, spec.precision);
-	if (spec.width && spec.zero && spec.precision <= 0)
+	if (spec.width && spec.zero && !spec.dot)
 		s = adjust_format_precision_unsigned(s, spec.width - 1);
 	s1 = ft_strdup("-");
 	s2 = ft_strdup(s);
