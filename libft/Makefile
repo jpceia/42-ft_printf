@@ -47,7 +47,9 @@ BONUS_SRCS	= \
 			ft_lstiter.c \
 			ft_lstmap.c \
 			ft_lltoa_bonus.c \
+			ft_ulltoa_bonus.c \
 			ft_lltoa_base_bonus.c \
+			ft_ulltoa_base_bonus.c \
 			ft_contains_bonus.c \
 			ft_strreverse_bonus.c
 
