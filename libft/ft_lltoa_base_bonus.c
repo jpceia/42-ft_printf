@@ -6,11 +6,18 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 06:30:12 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/09 17:54:09 by jceia            ###   ########.fr       */
+/*   Updated: 2021/04/12 16:46:45 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft_bonus.h"
+
+static	char	*single_char_str(char *buf, char c)
+{
+	buf[0] = '0';
+	buf[1] = '\0';
+	return (buf);
+}
 
 char	*ft_lltoa_base(long long nb, const char *base)
 {
@@ -26,11 +33,7 @@ char	*ft_lltoa_base(long long nb, const char *base)
 	if (!buf)
 		return (NULL);
 	if (nb == 0)
-	{
-		buf[0] = base[0];
-		buf[1] = '\0';
-		return (buf);
-	}
+		return (*single_char_str(buf, base[0]));
 	index = 63;
 	buf[index--] = '\0';
 	sign = (nb < 0);
