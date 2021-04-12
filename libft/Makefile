@@ -48,7 +48,8 @@ BONUS_SRCS	= \
 			ft_lstmap.c \
 			ft_lltoa_bonus.c \
 			ft_lltoa_base_bonus.c \
-			ft_contains_bonus.c
+			ft_contains_bonus.c \
+			ft_strreverse_bonus.c
 
 OBJS		= $(SRCS:.c=.o)
 
