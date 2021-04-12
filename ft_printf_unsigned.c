@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:49:52 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/09 17:39:12 by jceia            ###   ########.fr       */
+/*   Updated: 2021/04/12 18:34:12 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	*adjust_format_precision_unsigned(char *s, size_t n_digits)
 		s1 = malloc(len);
 		ft_memset(s1, '0', len);
 		s2 = ft_strdup(s);
+		free(s);
 		s = ft_strjoin(s1, s2);
 		free(s1);
 		free(s2);
