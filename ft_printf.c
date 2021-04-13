@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 20:32:00 by jceia            ###   ########.fr       */
+/*   Updated: 2021/04/12 20:39:37 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@
 int	print_arg(va_list *args, t_spec spec)
 {
 	if (spec.type == 'c')
-		return (print_char(args, spec));
+		return (print_char(va_arg(*args, int), spec));
 	if (spec.type == 's')
-		return (print_string(args, spec));
+		return (print_string(va_arg(*args, char *), spec));
 	if (ft_contains(spec.type, "di"))
-		return (print_signed(args, spec));
+		return (print_signed(va_arg(*args, int), spec));
 	if (ft_contains(spec.type, "uxX"))
-		return (print_unsigned(args, spec));
+		return (print_unsigned(va_arg(*args, unsigned int), spec));
 	if (spec.type == 'p')
-		return (print_pointer(args, spec));
+		return (print_pointer(va_arg(*args, void *), spec));
 	if (spec.type == '%')
 		return (print_percentage(spec));
 	return (PFT_ERR);

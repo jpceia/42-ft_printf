@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:53:14 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 20:31:32 by jceia            ###   ########.fr       */
+/*   Updated: 2021/04/12 20:47:51 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,19 @@ char	*adjust_format_precision_str(char *s, int len)
 	return (s);
 }
 
-int	print_string(va_list *args, t_spec spec)
+int	print_string(char *s, t_spec spec)
 {
 	int		n_chars;
-	char	*s;
+	char	*s_copy;
 
-	s = va_arg(*args, char *);
 	if (!s)
 		s = "(null)";
-	s = ft_strdup(s);
+	s_copy = ft_strdup(s);
 	if (spec.dot)
-		s = adjust_format_precision_str(s, spec.precision);
-	s = adjust_format_width_space(s, spec.width, spec.minus);
-	ft_putstr_fd(s, STDOUT_FILENO);
-	n_chars = ft_strlen(s);
-	free(s);
+		s_copy = adjust_format_precision_str(s_copy, spec.precision);
+	s_copy = adjust_format_width_space(s_copy, spec.width, spec.minus);
+	ft_putstr_fd(s_copy, STDOUT_FILENO);
+	n_chars = ft_strlen(s_copy);
+	free(s_copy);
 	return (n_chars);
 }

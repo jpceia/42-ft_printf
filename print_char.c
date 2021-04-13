@@ -6,13 +6,13 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 22:29:21 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 20:31:16 by jceia            ###   ########.fr       */
+/*   Updated: 2021/04/12 20:42:55 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_internal.h"
 
-int	print_char_arg(char c, t_spec spec)
+int	print_char(char c, t_spec spec)
 {
 	int		width;
 	char	left_whitespace;
@@ -35,13 +35,5 @@ int	print_char_arg(char c, t_spec spec)
 
 int	print_percentage(t_spec spec)
 {
-	return (print_char_arg('%', spec));
-}
-
-int	print_char(va_list *args, t_spec spec)
-{
-	char	c;
-
-	c = (unsigned char)va_arg(*args, int);
-	return (print_char_arg(c, spec));
+	return (print_char('%', spec));
 }

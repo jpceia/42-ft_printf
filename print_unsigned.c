@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:49:52 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 20:31:36 by jceia            ###   ########.fr       */
+/*   Updated: 2021/04/12 20:40:11 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,23 @@ char	*adjust_format_unsigned(char *s, t_spec spec)
 	return (adjust_format_width_space(s, spec.width, spec.minus));
 }
 
-int	print_unsigned(va_list *args, t_spec spec)
+int	print_unsigned(unsigned int nb, t_spec spec)
 {
 	int		n_chars;
 	char	*s;
 
 	s = NULL;
 	if (ft_contains(spec.type, "u"))
-		s = ft_ulltoa(va_arg(*args, unsigned int));
+		s = ft_ulltoa(nb);
 	else if (spec.type == 'x')
 	{
-		s = ft_ulltoa_base(va_arg(*args, unsigned int), "0123456789abcdef");
+		s = ft_ulltoa_base(nb, "0123456789abcdef");
 		if (spec.hash)
 			s = add_left_char(add_left_char(s, 'x'), '0');
 	}
 	else if (spec.type == 'X')
 	{
-		s = ft_ulltoa_base(va_arg(*args, unsigned int), "0123456789ABCDEF");
+		s = ft_ulltoa_base(nb, "0123456789ABCDEF");
 		if (spec.hash)
 			s = add_left_char(add_left_char(s, 'X'), '0');
 	}

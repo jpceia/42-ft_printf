@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 12:47:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 20:37:24 by jceia            ###   ########.fr       */
+/*   Updated: 2021/04/12 20:44:49 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ typedef struct s_spec
 int		parse_spec(const char *fmt, t_spec *spec);
 int		parse_spec_star(va_list *args, t_spec *spec);
 int		print_percentage(t_spec spec);
-int		print_char(va_list *args, t_spec spec);
-int		print_string(va_list *args, t_spec spec);
-int		print_signed(va_list *args, t_spec spec);
-int		print_unsigned(va_list *args, t_spec spec);
-int		print_pointer(va_list *args, t_spec spec);
+int		print_char(char c, t_spec spec);
+int		print_string(char *s, t_spec spec);
+int		print_signed(int nb, t_spec spec);
+int		print_unsigned(unsigned int nb, t_spec spec);
+int		print_pointer(void *ptr, t_spec spec);
 char	*adjust_format_unsigned(char *s, t_spec spec);
 char	*adjust_format_width_space(char *s, int width, int left);
 char	*adjust_format_precision_unsigned(char *s, size_t n_digits);
