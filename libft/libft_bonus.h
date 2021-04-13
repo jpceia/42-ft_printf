@@ -6,14 +6,14 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 06:05:31 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 19:11:49 by jceia            ###   ########.fr       */
+/*   Updated: 2021/04/13 17:25:25 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_BONUS_H
-#define LIBFT_BONUS_H
+# define LIBFT_BONUS_H
 
-#include "libft.h"
+# include "libft.h"
 
 char	*ft_lltoa(long long nb);
 char	*ft_ulltoa(unsigned long long nb);

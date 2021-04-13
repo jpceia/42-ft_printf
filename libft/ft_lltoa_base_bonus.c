@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 06:30:12 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 17:16:58 by jceia            ###   ########.fr       */
+/*   Updated: 2021/04/13 17:33:10 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,13 @@ static	char	*single_char_str(char *buf, char c)
 	return (buf);
 }
 
-char	*ft_lltoa_base(long long nb, const char *base)
+static	char	*ft_lltoa_base_core(long long nb, const char *base,
+									int base_size)
 {
-	int		base_size;
 	int		index;
 	int		sign;
 	char	*buf;
 
-	base_size = ft_strlen(base);
-	if (base_size <= 1)
-		return (NULL);
 	buf = malloc(64);
 	if (!buf)
 		return (NULL);
@@ -47,4 +44,14 @@ char	*ft_lltoa_base(long long nb, const char *base)
 		buf[index++] = '-';
 	buf[index] = '\0';
 	return (ft_strreverse(buf));
+}
+
+char	*ft_lltoa_base(long long nb, const char *base)
+{
+	int		base_size;
+
+	base_size = ft_strlen(base);
+	if (base_size <= 1)
+		return (NULL);
+	return (ft_lltoa_base_core(nb, base, base_size));
 }

@@ -6,7 +6,7 @@
 /*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 17:02:39 by jceia             #+#    #+#             */
-/*   Updated: 2021/04/12 17:08:45 by jceia            ###   ########.fr       */
+/*   Updated: 2021/04/13 17:29:33 by jceia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strreverse(char *s)
 {
-	int	index;
-	int	len;
+	int		index;
+	int		len;
 	char	holder;
 
 	index = 0;
