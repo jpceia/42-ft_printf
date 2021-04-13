@@ -47,8 +47,10 @@ fclean:
 
 re:			fclean all
 
+bonus:		all
+
 so:
 			$(CC) -fPIC $(CFLAGS) -c $(SRCS)
 			gcc -shared -o libft.so $(OBJS)
 
-.PHONY:		all clean fclean re so
+.PHONY:		all clean fclean re so bonus
