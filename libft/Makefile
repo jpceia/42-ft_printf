@@ -1,4 +1,4 @@
-INCDIR		= .
+NAME		= libft.a
 
 SRCS		= \
 			ft_memset.c \
@@ -57,21 +57,15 @@ OBJS		= $(SRCS:.c=.o)
 
 BONUS_OBJS	= $(BONUS_SRCS:.c=.o)
 
-NAME		= libft.a
-
 CC			= gcc
-AR			= ar rc
 RM			= rm -f
 
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -I.
 
 all:		$(NAME)
 
-.c.o:
-			${CC} ${CFLAGS} -I${INCDIR} -c $< -o ${<:.c=.o}
-
 $(NAME):	$(OBJS)
-			$(AR) $(NAME) $(OBJS)
+			ar rc $(NAME) $(OBJS)
 
 clean:
 			$(RM) $(OBJS) $(BONUS_OBJS)
@@ -79,13 +73,9 @@ clean:
 fclean:		clean
 			$(RM) $(NAME)
 
-re:			fclean all
+re:			fclean $(NAME)
 
 bonus:		$(OBJS) $(BONUS_OBJS)
-			$(AR) $(NAME) $(OBJS) $(BONUS_OBJS)
+			ar rc $(NAME) $(OBJS) $(BONUS_OBJS)
 
-so:
-			$(CC) -fPIC $(CFLAGS) -c $(SRCS)
-			gcc -shared -o libft.so $(OBJS)
-
-.PHONY:		all clean fclean re bonus so
+.PHONY:		all clean fclean re bonus
