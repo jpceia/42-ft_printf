@@ -3,34 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/15 22:52:33 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 20:39:37 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/04 21:36:13 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_internal.h"
 #include "ft_printf.h"
 
-int	print_arg(va_list *args, t_spec spec)
+int	append_arg(va_list *args, t_spec spec, char **out)
 {
 	if (spec.type == 'c')
-		return (print_char(va_arg(*args, int), spec));
+		return (append_char(va_arg(*args, int), spec, out));
 	if (spec.type == 's')
-		return (print_string(va_arg(*args, char *), spec));
+		return (append_string(va_arg(*args, char *), spec, out));
 	if (ft_contains(spec.type, "di"))
-		return (print_signed(va_arg(*args, int), spec));
+		return (append_signed(va_arg(*args, int), spec, out));
 	if (ft_contains(spec.type, "uxX"))
-		return (print_unsigned(va_arg(*args, unsigned int), spec));
+		return (append_unsigned(va_arg(*args, unsigned int), spec, out));
 	if (spec.type == 'p')
-		return (print_pointer(va_arg(*args, void *), spec));
+		return (append_pointer(va_arg(*args, void *), spec, out));
 	if (spec.type == '%')
-		return (print_percentage(spec));
+		return (append_percentage(spec, out));
 	return (PFT_ERR);
 }
 
-int	parse_and_print_item(const char **fmt, va_list *args)
+int	parse_and_append(const char **fmt, va_list *args, char **out)
 {
 	int		index;
 	t_spec	spec;
@@ -42,28 +42,31 @@ int	parse_and_print_item(const char **fmt, va_list *args)
 	if (index < 0)
 		return (PFT_ERR);
 	*fmt = *fmt + index + 1;
-	return (print_arg(args, spec));
+	return (append_arg(args, spec, out));
 }
 
 int	ft_vprintf(const char *fmt, va_list args)
 {
 	va_list	args_copy;
+	char	*str;
 	int		n;
 	int		i;
 
 	n = 0;
 	va_copy(args_copy, args);
+	str = ft_strdup("");
 	while (*fmt)
 	{
 		i = 1;
 		if (*fmt == '%')
-			i = parse_and_print_item(&fmt, &args_copy);
+			i = parse_and_append(&fmt, &args_copy, &str);
 		else
-			ft_putchar_fd(*(fmt++), STDOUT_FILENO);
+			str = ft_straddc(str, *(fmt++));
 		if (i < 0)
 			return (PFT_ERR);
 		n += i;
 	}
+	ft_putstr_fd(str, STDOUT_FILENO);
 	return (n);
 }
 

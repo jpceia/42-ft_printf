@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_pointer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:50:40 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 20:41:38 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/04 21:39:16 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ char	*ft_ptrtoa(void *ptr)
 	return (s);
 }
 
-int	print_pointer(void *ptr, t_spec spec)
+int	append_pointer(void *ptr, t_spec spec, char **out)
 {
 	int		n_chars;
+	char	*holder;
 	char	*s;
 
 	if (!ptr)
@@ -36,8 +37,10 @@ int	print_pointer(void *ptr, t_spec spec)
 	else
 		s = ft_ptrtoa(ptr);
 	s = adjust_format_width_space(s, spec.width, spec.minus);
-	ft_putstr_fd(s, STDOUT_FILENO);
+	holder = *out;
+	*out = ft_strjoin(holder, s);
 	n_chars = ft_strlen(s);
+	free(holder);
 	free(s);
 	return (n_chars);
 }

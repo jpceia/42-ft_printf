@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_signed.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:49:52 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/13 14:42:07 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/04 21:39:01 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ char	*drop_left_char(char *s)
 	return (r);
 }
 
-int	print_signed(int nb, t_spec spec)
+int	append_signed(int nb, t_spec spec, char **out)
 {
 	int		n_chars;
+	char	*holder;
 	char	*s;
 
 	if (spec.minus)
@@ -51,8 +52,10 @@ int	print_signed(int nb, t_spec spec)
 		s = adjust_format_unsigned(s, spec);
 	else
 		s = adjust_format_signed(drop_left_char(s), spec);
-	ft_putstr_fd(s, STDOUT_FILENO);
+	holder = *out;
+	*out = ft_strjoin(holder, s);
 	n_chars = ft_strlen(s);
+	free(holder);
 	free(s);
 	return (n_chars);
 }

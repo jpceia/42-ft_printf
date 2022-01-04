@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_unsigned.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:49:52 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 20:40:11 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/04 21:38:39 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,10 @@ char	*adjust_format_unsigned(char *s, t_spec spec)
 	return (adjust_format_width_space(s, spec.width, spec.minus));
 }
 
-int	print_unsigned(unsigned int nb, t_spec spec)
+int	append_unsigned(unsigned int nb, t_spec spec, char **out)
 {
 	int		n_chars;
+	char	*holder;
 	char	*s;
 
 	s = NULL;
@@ -88,8 +89,10 @@ int	print_unsigned(unsigned int nb, t_spec spec)
 	else
 		return (PFT_ERR);
 	s = adjust_format_unsigned(s, spec);
-	ft_putstr_fd(s, STDOUT_FILENO);
+	holder = *out;
+	*out = ft_strjoin(holder, s);
 	n_chars = ft_strlen(s);
+	free(holder);
 	free(s);
 	return (n_chars);
 }

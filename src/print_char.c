@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   print_char.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 22:29:21 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 20:42:55 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/04 21:40:17 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf_internal.h"
 
-int	print_char(char c, t_spec spec)
+int	append_char(char c, t_spec spec, char **out)
 {
 	int		width;
 	char	left_whitespace;
@@ -22,18 +22,22 @@ int	print_char(char c, t_spec spec)
 		left_whitespace = '0';
 	width = spec.width;
 	if (!spec.minus && width > 1)
+	{
 		while (--width)
-			ft_putchar_fd(left_whitespace, STDOUT_FILENO);
-	ft_putchar_fd(c, STDOUT_FILENO);
+			*out = ft_straddc(*out, left_whitespace);
+	}
+	*out = ft_straddc(*out, c);
 	if (spec.minus && width > 1)
+	{
 		while (--width)
-			ft_putchar_fd(' ', STDOUT_FILENO);
+			*out = ft_straddc(*out, ' ');
+	}
 	if (spec.width > 1)
 		return (spec.width);
 	return (1);
 }
 
-int	print_percentage(t_spec spec)
+int	append_percentage(t_spec spec, char **out)
 {
-	return (print_char('%', spec));
+	return (append_char('%', spec, out));
 }

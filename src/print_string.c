@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_string.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jceia <jceia@student.42.fr>                +#+  +:+       +#+        */
+/*   By: jpceia <joao.p.ceia@gmail.com>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 09:53:14 by jpceia            #+#    #+#             */
-/*   Updated: 2021/04/12 20:47:51 by jceia            ###   ########.fr       */
+/*   Updated: 2022/01/04 21:38:44 by jpceia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ char	*adjust_format_precision_str(char *s, int len)
 	return (s);
 }
 
-int	print_string(char *s, t_spec spec)
+int append_string(char *s, t_spec spec, char **out)
 {
 	int		n_chars;
+	char	*holder;
 	char	*s_copy;
 
 	if (!s)
@@ -33,8 +34,10 @@ int	print_string(char *s, t_spec spec)
 	if (spec.dot)
 		s_copy = adjust_format_precision_str(s_copy, spec.precision);
 	s_copy = adjust_format_width_space(s_copy, spec.width, spec.minus);
-	ft_putstr_fd(s_copy, STDOUT_FILENO);
+	holder = *out;
+	*out = ft_strjoin(holder, s_copy);
 	n_chars = ft_strlen(s_copy);
+	free(holder);
 	free(s_copy);
 	return (n_chars);
 }
