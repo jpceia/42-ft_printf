@@ -1,81 +1,53 @@
 NAME		= libft.a
 
-SRCS		= \
-			ft_memset.c \
-			ft_bzero.c \
-			ft_memcpy.c \
-			ft_memccpy.c \
-			ft_memmove.c \
-			ft_memchr.c \
-			ft_memcmp.c \
-			ft_strlen.c \
-			ft_strlcat.c \
-			ft_strlcpy.c \
-			ft_strchr.c \
-			ft_strrchr.c \
-			ft_strnstr.c \
-			ft_strncmp.c \
-			ft_atoi.c \
-			ft_isalpha.c \
-			ft_isdigit.c \
-			ft_isalnum.c \
-			ft_isascii.c \
-			ft_isprint.c \
-			ft_toupper.c \
-			ft_tolower.c \
-			ft_calloc.c \
-			ft_strdup.c \
-			ft_substr.c \
-			ft_strmapi.c \
-			ft_strjoin.c \
-			ft_strtrim.c \
-			ft_split.c \
-			ft_itoa.c \
-			ft_putchar_fd.c \
-			ft_putstr_fd.c \
-			ft_putendl_fd.c \
-			ft_putnbr_fd.c
+SRC_DIR		= src
+OBJ_DIR		= obj
 
-BONUS_SRCS	= \
-			ft_lstnew.c \
-			ft_lstadd_front.c \
-			ft_lstsize.c \
-			ft_lstlast.c \
-			ft_lstadd_back.c \
-			ft_lstdelone.c \
-			ft_lstclear.c \
-			ft_lstiter.c \
-			ft_lstmap.c \
-			ft_lltoa_bonus.c \
-			ft_ulltoa_bonus.c \
-			ft_lltoa_base_bonus.c \
-			ft_ulltoa_base_bonus.c \
-			ft_contains_bonus.c \
-			ft_strreverse_bonus.c
-
-OBJS		= $(SRCS:.c=.o)
-
-BONUS_OBJS	= $(BONUS_SRCS:.c=.o)
+SRCS		:= $(shell find $(SRC_DIR) -name "*.c" -type f)
+OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 CC			= gcc
 RM			= rm -f
+OS          = $(shell uname)
 
-CFLAGS		= -Wall -Wextra -Werror -I.
+FLAGS_WARN  = -Wall -Wextra -Werror
+FLAGS_INC   = -I.
+FLAGS_OPT   = -O3
+FLAGS_DEBUG = -DDEBUG
+
+ifeq ($(OS), Linux)
+	FLAGS_DEBUG += -ggdb3
+else
+	FLAGS_DEBUG += -g
+endif
+
+CFLAGS		= $(FLAGS_WARN) $(FLAGS_INC) $(FLAGS_OPT)
 
 all:		$(NAME)
 
-$(NAME):	$(OBJS)
-			ar rc $(NAME) $(OBJS)
+# Compilation
+$(OBJ_DIR)/%.o:	$(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
+# Generate libft.a
+$(NAME):	$(OBJS)
+			ar rcs $@ $(OBJS)
+
+# Cleaning
 clean:
-			$(RM) $(OBJS) $(BONUS_OBJS)
+			$(RM) -rf $(OBJ_DIR)
 
 fclean:		clean
 			$(RM) $(NAME)
 
+# Rebuid
 re:			fclean $(NAME)
 
-bonus:		$(OBJS) $(BONUS_OBJS)
-			ar rc $(NAME) $(OBJS) $(BONUS_OBJS)
+# Debugging build
+# We remove FLAGS_OPT and add FLAGS_DEBUG to CFLAGS
+debug:      CFLAGS = $(FLAGS_WARN) $(FLAGS_INC) $(FLAGS_DEBUG)
+debug:      re
 
-.PHONY:		all clean fclean re bonus
+
+.PHONY:		all clean fclean re debug
